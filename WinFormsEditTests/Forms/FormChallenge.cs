@@ -12,8 +12,6 @@ namespace WinFormsEditTests.Forms
 {
     public partial class FormChallenge : Form
     {
-        // private string name;
-        private string name;
         public FormChallenge()
         {
             InitializeComponent();
@@ -26,7 +24,7 @@ namespace WinFormsEditTests.Forms
             this.AcceptButton = _buttonOk;
         }
 
-        public string Name
+        public string ChallengeName
         {
             get => _textBoxName.Text;
             set => _textBoxName.Text = value;

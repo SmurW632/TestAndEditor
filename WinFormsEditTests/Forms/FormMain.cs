@@ -364,12 +364,12 @@ namespace WinFormsEditTests.Forms
             var str = "Наименование задания";
             var form = new FormChallenge();
             form.Owner = this;
-            form.Name = str;
+            form.ChallengeName = str;
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            if (String.IsNullOrWhiteSpace(form.Name)
-                || form.Name.Equals(str))
+            if (String.IsNullOrWhiteSpace(form.ChallengeName)
+                || form.ChallengeName.Equals(str))
             {
                 var message = "Для создания нового задания \nнеобходимо ввести его наименование.";
                 MessageBox.Show(message, "Сообщение",
@@ -378,7 +378,7 @@ namespace WinFormsEditTests.Forms
             }
 
             var challenge = new Challenge();
-            challenge.Name = form.Name;
+            challenge.Name = form.ChallengeName;
 
             //coхраняем в файл
             _data.AddChallenge(challenge);
