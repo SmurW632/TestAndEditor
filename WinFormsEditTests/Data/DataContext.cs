@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -17,7 +18,7 @@ namespace WinFormsEditTests.Data
     public class DataContext
     {
         //путь к файлу
-        private readonly string _pathToFile;
+        private string _pathToFile;
         //задания
         private readonly List<Challenge> _сhallenges;
 
@@ -27,11 +28,11 @@ namespace WinFormsEditTests.Data
         /// <param name="pathToFile">путь к файлу хранения данных программы</param>
         public DataContext(string pathToFile)
         {
-            if (string.IsNullOrEmpty(pathToFile))
+            if (String.IsNullOrEmpty(pathToFile))
                 throw new ArgumentException(nameof(pathToFile));
 
-            _pathToFile = pathToFile;
             _сhallenges = new List<Challenge>();
+            _pathToFile = pathToFile;
             ReadFile();
         }
 
@@ -42,9 +43,16 @@ namespace WinFormsEditTests.Data
         {
             var contents = String.Empty;
 
-            if (File.Exists(_pathToFile))
+            try
             {
-                contents = File.ReadAllText(_pathToFile);
+                if (File.Exists(_pathToFile))
+                {
+                    contents = File.ReadAllText(_pathToFile);
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine($"Ошибка чтения в ReadFile(): {ex.Message}");
             }
 
             if (String.IsNullOrEmpty(contents))
@@ -55,10 +63,17 @@ namespace WinFormsEditTests.Data
             var serializer = new XmlSerializer(_сhallenges.GetType());
             using (var reader = new StringReader(contents))
             {
-                var records = (List<Challenge>)serializer.Deserialize(reader);
+                try
+                {
+                    var records = (List<Challenge>)serializer.Deserialize(reader);
 
-                _сhallenges.Clear();
-                _сhallenges.AddRange(records);
+                    _сhallenges.Clear();
+                    _сhallenges.AddRange(records);
+                }
+                catch (Exception ex)
+                {
+                    Trace.WriteLine($"Ошибка десериализации в ReadFile(): {ex.Message}");
+                }
             }
         }
 
@@ -156,6 +171,19 @@ namespace WinFormsEditTests.Data
         {
             WriteFile();
             ReadFile();
+        }
+
+        /// <summary>
+        /// Сохранение заданий по новому пути в др.файл
+        /// </summary>
+        /// <param name="pathToFile"></param>
+        public void SaveNewFile(string pathToFile)
+        {
+            if (String.IsNullOrEmpty(pathToFile))
+                throw new ArgumentException(nameof(pathToFile));
+
+            _pathToFile = pathToFile;
+            Save();
         }
     }
 }
