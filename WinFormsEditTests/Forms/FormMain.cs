@@ -19,7 +19,7 @@ namespace WinFormsEditTests.Forms
     public partial class FormMain : Form
     {
         //контекст данных приложения
-        private readonly DataContext _data;
+        private DataContext _data;
         //для определения типа ноды кот.выделили
         private const string _Challenge_Node_Name = "Challenge";
         private const string _Question_Node_Name = "Question";
@@ -41,7 +41,7 @@ namespace WinFormsEditTests.Forms
             this.Text = "Редактор тестов";
 
             //инициализация контекста данных
-            _data = new DataContext("Data/challenges.xml");
+            _data = InitDataContext();
             //привязки
             SetBindings();
 
@@ -56,6 +56,21 @@ namespace WinFormsEditTests.Forms
             _buttonX.Click += ButtonClose_Click;
             _buttonX.MouseEnter += ButtonClose_MouseEnter;
             _buttonX.MouseLeave += ButtonClose_MouseLeave;
+        }
+
+        /// <summary>
+        /// Инициализация контекста данных программы
+        /// </summary>
+        /// <returns></returns>
+        private DataContext InitDataContext()
+        {
+            var path = Path.Combine(Application.StartupPath, "challenges.xml");
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+
+            return new DataContext(path);
         }
 
         private void ButtonClose_MouseLeave(object sender, EventArgs e)
@@ -104,7 +119,6 @@ namespace WinFormsEditTests.Forms
         private void FormMain_Load(object sender, EventArgs e)
         {
             SetComboBox();
-            LoadChallenges();
         }
 
         /// <summary>
@@ -129,6 +143,12 @@ namespace WinFormsEditTests.Forms
                 _currentChallenge = challenges[0];
                 ShowChallenges(challenges);
             }
+            else
+            {
+                var message = "Не удалось прочитать указанный файл заданий.";
+                var caption = "Сообщение";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         /// <summary>
@@ -138,10 +158,7 @@ namespace WinFormsEditTests.Forms
         private void ShowChallenges(List<Challenge> challenges)
         {
             //очищаем ранее отображаемое
-            _treeView.Nodes.Clear();
-            _currentQuestion = new Question(QuestionType.None);
-            _bsQuestion.DataSource = new Question(QuestionType.None);
-            _panel.Controls.Clear();
+            ClearChallengesAndQuestions();
 
             foreach (Challenge challenge in challenges)
             {
@@ -161,6 +178,17 @@ namespace WinFormsEditTests.Forms
                 //добавляем ноду задачи в дерево
                 _treeView.Nodes.Add(node);
             }
+        }
+
+        /// <summary>
+        /// Очистка отображаемых нод и вопросов
+        /// </summary>
+        private void ClearChallengesAndQuestions()
+        {
+            _treeView.Nodes.Clear();
+            _currentQuestion = new Question(QuestionType.None);
+            _bsQuestion.DataSource = new Question(QuestionType.None);
+            _panel.Controls.Clear();
         }
 
         /// <summary>
@@ -364,12 +392,12 @@ namespace WinFormsEditTests.Forms
             var str = "Наименование задания";
             var form = new FormChallenge();
             form.Owner = this;
-            form.Name = str;
+            form.ChallengeName = str;
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            if (String.IsNullOrWhiteSpace(form.Name)
-                || form.Name.Equals(str))
+            if (String.IsNullOrWhiteSpace(form.ChallengeName)
+                || form.ChallengeName.Equals(str))
             {
                 var message = "Для создания нового задания \nнеобходимо ввести его наименование.";
                 MessageBox.Show(message, "Сообщение",
@@ -378,13 +406,14 @@ namespace WinFormsEditTests.Forms
             }
 
             var challenge = new Challenge();
-            challenge.Name = form.Name;
+            challenge.Name = form.ChallengeName;
 
             //coхраняем в файл
             _data.AddChallenge(challenge);
             //перезагружаем задания
             LoadChallenges();
         }
+
         /// <summary>
         /// Кнопка Задание удалить
         /// </summary>
@@ -405,7 +434,6 @@ namespace WinFormsEditTests.Forms
             //перезагружаем задания
             LoadChallenges();
         }
-
 
         private void copyToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
@@ -476,29 +504,57 @@ namespace WinFormsEditTests.Forms
             LoadChallenges();
         }
 
-        private void createFileToolStripMenuItem_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Меню Файл-Создать
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void СreateFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //Создать новый файл
-            var createFile = File.Create("Data/new_file.xml");
+            //переинициализируем контекст данных
+            _data = InitDataContext();
+
+            //очищаем ранее отображаемое
+            ClearChallengesAndQuestions();
         }
 
-        private void SaveKakToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //Сохранить как...
-            try
-            {
-               
-            }
-            catch (Exception)
-            {
+        
 
-                throw;
-            }
+        /// <summary>
+        /// Меню Файл-Сохранить Как
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SaveHowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_saveFileDialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            _data.SaveNewFile(_saveFileDialog.FileName);
         }
 
+        /// <summary>
+        /// Меню Файл-Сохранить
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //сохранить 
+            _data.Save();
+        }
+
+        /// <summary>
+        /// Меню Файл-Открыть
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_openFileDialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            _data = new DataContext(_openFileDialog.FileName);
+            LoadChallenges();
         }
     }
 }
