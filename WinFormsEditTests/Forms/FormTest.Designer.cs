@@ -33,6 +33,8 @@
             this._buttonX = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this._labelQTitle = new System.Windows.Forms.Label();
+            this._labelCounter = new System.Windows.Forms.Label();
             this._buttonNext = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -47,8 +49,7 @@
             this.тестToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this._labelCounter = new System.Windows.Forms.Label();
-            this._labelQTitle = new System.Windows.Forms.Label();
+            this._openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -107,6 +108,24 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(768, 581);
             this.panel2.TabIndex = 1;
+            // 
+            // _labelQTitle
+            // 
+            this._labelQTitle.AutoSize = true;
+            this._labelQTitle.Location = new System.Drawing.Point(361, 36);
+            this._labelQTitle.Name = "_labelQTitle";
+            this._labelQTitle.Size = new System.Drawing.Size(35, 13);
+            this._labelQTitle.TabIndex = 20;
+            this._labelQTitle.Text = "label5";
+            // 
+            // _labelCounter
+            // 
+            this._labelCounter.AutoSize = true;
+            this._labelCounter.Location = new System.Drawing.Point(84, 35);
+            this._labelCounter.Name = "_labelCounter";
+            this._labelCounter.Size = new System.Drawing.Size(35, 13);
+            this._labelCounter.TabIndex = 19;
+            this._labelCounter.Text = "label5";
             // 
             // _buttonNext
             // 
@@ -203,21 +222,21 @@
             this._openToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._openToolStripMenuItem.Name = "_openToolStripMenuItem";
             this._openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this._openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this._openToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this._openToolStripMenuItem.Text = "&Открыть";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.ForeColor = System.Drawing.Color.White;
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(172, 6);
             // 
             // _exitToolStripMenuItem
             // 
             this._exitToolStripMenuItem.BackColor = System.Drawing.Color.White;
             this._exitToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
             this._exitToolStripMenuItem.Name = "_exitToolStripMenuItem";
-            this._exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this._exitToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this._exitToolStripMenuItem.Text = "Вы&ход";
             // 
             // тестToolStripMenuItem
@@ -243,23 +262,10 @@
             this.AboutToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.AboutToolStripMenuItem.Text = "&О программе...";
             // 
-            // _labelCounter
+            // _openFileDialog
             // 
-            this._labelCounter.AutoSize = true;
-            this._labelCounter.Location = new System.Drawing.Point(84, 35);
-            this._labelCounter.Name = "_labelCounter";
-            this._labelCounter.Size = new System.Drawing.Size(35, 13);
-            this._labelCounter.TabIndex = 19;
-            this._labelCounter.Text = "label5";
-            // 
-            // _labelQTitle
-            // 
-            this._labelQTitle.AutoSize = true;
-            this._labelQTitle.Location = new System.Drawing.Point(361, 36);
-            this._labelQTitle.Name = "_labelQTitle";
-            this._labelQTitle.Size = new System.Drawing.Size(35, 13);
-            this._labelQTitle.TabIndex = 20;
-            this._labelQTitle.Text = "label5";
+            this._openFileDialog.Filter = "XML files (*.xml)|*.xml";
+            this._openFileDialog.InitialDirectory = "\"c:\\\\\"";
             // 
             // FormTest
             // 
@@ -305,5 +311,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label _labelQTitle;
         private System.Windows.Forms.Label _labelCounter;
+        private System.Windows.Forms.OpenFileDialog _openFileDialog;
     }
 }
