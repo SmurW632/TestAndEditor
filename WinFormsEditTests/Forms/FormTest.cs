@@ -75,7 +75,14 @@ namespace WinFormsEditTests.Forms
 
             _bsChallenges.Clear();
             challenges.ForEach(c => _bsChallenges.Add(c));
+            LoadQuestions();
+        }
 
+        /// <summary>
+        /// Загрузка вопросов текущего задания
+        /// </summary>
+        private void LoadQuestions()
+        {
             _bsQuestions.Clear();
             var currentChallenge = _bsChallenges.Current as Challenge;
             currentChallenge.Questions.ForEach(q => _bsQuestions.Add(q));
@@ -123,7 +130,9 @@ namespace WinFormsEditTests.Forms
             if (prevPosition == _bsChallenges.Position)
             {
                 ShowTestResults();
+                return;
             }
+            LoadQuestions();
         }
 
         /// <summary>
