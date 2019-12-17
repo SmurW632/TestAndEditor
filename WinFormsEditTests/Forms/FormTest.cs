@@ -25,8 +25,12 @@ namespace WinFormsEditTests.Forms
             SetBindings();
 
             _openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
+            _buttonNext.Click += ButtonNext_Click;
         }
 
+        /// <summary>
+        /// Установка привязок
+        /// </summary>
         private void SetBindings()
         {
             _bsChallenges = new BindingSource();
@@ -75,6 +79,46 @@ namespace WinFormsEditTests.Forms
             _bsQuestions.Clear();
             var currentChallenge = _bsChallenges.Current as Challenge;
             currentChallenge.Questions.ForEach(q => _bsQuestions.Add(q));
+        }
+
+        /// <summary>
+        /// Кнопка Дальше
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonNext_Click(object sender, EventArgs e)
+        {
+            if (_bsChallenges.Count == 0)
+            {
+                var message = "Сначала откройте файл заданий";
+                var caption = "Сообщение";
+                MessageBox.Show(message, caption,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            OpenNextQuestion();
+        }
+
+        /// <summary>
+        /// Открытие следующего вопроса из текущего задания
+        /// </summary>
+        private void OpenNextQuestion()
+        {
+            var prevPosition = _bsQuestions.Position;
+            _bsQuestions.MoveNext();
+            if (prevPosition == _bsQuestions.Position)
+            {
+                OpenNextChallenge();
+            }
+        }
+
+        /// <summary>
+        /// Открытие следующего задания из текущего файла
+        /// </summary>
+        private void OpenNextChallenge()
+        {
+            throw new NotImplementedException();
         }
     }
 }
