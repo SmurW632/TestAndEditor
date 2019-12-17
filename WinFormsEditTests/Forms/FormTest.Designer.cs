@@ -34,10 +34,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this._labelQTitle = new System.Windows.Forms.Label();
+            this._labelChallenge = new System.Windows.Forms.Label();
             this._labelCounter = new System.Windows.Forms.Label();
             this._buttonNext = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this._panel = new System.Windows.Forms.Panel();
             this._textBoxQuestion = new System.Windows.Forms.TextBox();
@@ -50,8 +52,6 @@
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.label5 = new System.Windows.Forms.Label();
-            this._labelChallenge = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -116,20 +116,29 @@
             // _labelQTitle
             // 
             this._labelQTitle.AutoSize = true;
+            this._labelQTitle.ForeColor = System.Drawing.Color.White;
             this._labelQTitle.Location = new System.Drawing.Point(361, 60);
             this._labelQTitle.Name = "_labelQTitle";
-            this._labelQTitle.Size = new System.Drawing.Size(35, 13);
+            this._labelQTitle.Size = new System.Drawing.Size(0, 13);
             this._labelQTitle.TabIndex = 20;
-            this._labelQTitle.Text = "label5";
+            // 
+            // _labelChallenge
+            // 
+            this._labelChallenge.AutoSize = true;
+            this._labelChallenge.ForeColor = System.Drawing.Color.White;
+            this._labelChallenge.Location = new System.Drawing.Point(94, 39);
+            this._labelChallenge.Name = "_labelChallenge";
+            this._labelChallenge.Size = new System.Drawing.Size(0, 13);
+            this._labelChallenge.TabIndex = 19;
             // 
             // _labelCounter
             // 
             this._labelCounter.AutoSize = true;
+            this._labelCounter.ForeColor = System.Drawing.Color.White;
             this._labelCounter.Location = new System.Drawing.Point(84, 59);
             this._labelCounter.Name = "_labelCounter";
-            this._labelCounter.Size = new System.Drawing.Size(35, 13);
+            this._labelCounter.Size = new System.Drawing.Size(0, 13);
             this._labelCounter.TabIndex = 19;
-            this._labelCounter.Text = "label5";
             // 
             // _buttonNext
             // 
@@ -165,6 +174,17 @@
             this.label3.Size = new System.Drawing.Size(126, 20);
             this.label3.TabIndex = 16;
             this.label3.Text = "Наименование:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(15, 34);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(84, 20);
+            this.label5.TabIndex = 15;
+            this.label5.Text = "Задание: ";
             // 
             // label2
             // 
@@ -270,26 +290,6 @@
             // 
             this._openFileDialog.Filter = "XML files (*.xml)|*.xml";
             this._openFileDialog.InitialDirectory = "\"c:\\\\\"";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(15, 34);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(84, 20);
-            this.label5.TabIndex = 15;
-            this.label5.Text = "Задание: ";
-            // 
-            // _labelChallenge
-            // 
-            this._labelChallenge.AutoSize = true;
-            this._labelChallenge.Location = new System.Drawing.Point(94, 39);
-            this._labelChallenge.Name = "_labelChallenge";
-            this._labelChallenge.Size = new System.Drawing.Size(35, 13);
-            this._labelChallenge.TabIndex = 19;
-            this._labelChallenge.Text = "label5";
             // 
             // FormTest
             // 
