@@ -15,8 +15,8 @@ namespace WinFormsEditTests.Forms
     public partial class FormTest : Form
     {
         private DataContext _data;
-        private BindingSource _bsChallenges = new BindingSource();
-        private BindingSource _bsQuestions = new BindingSource();
+        private BindingSource _bsChallenges;
+        private BindingSource _bsQuestions;
 
         public FormTest()
         {
@@ -32,6 +32,10 @@ namespace WinFormsEditTests.Forms
             _bsChallenges = new BindingSource();
             _bsChallenges.DataSource = typeof(List<Challenge>);
             _labelChallenge.DataBindings.Add("Text", _bsChallenges, nameof(Challenge.Name));
+
+            _bsQuestions = new BindingSource();
+            _bsQuestions.DataSource = typeof(List<Question>);
+            _labelQTitle.DataBindings.Add("Text", _bsQuestions, nameof(Question.Title));
         }
 
         private void _buttonX_Click(object sender, EventArgs e)
@@ -66,6 +70,10 @@ namespace WinFormsEditTests.Forms
 
             _bsChallenges.Clear();
             challenges.ForEach(c => _bsChallenges.Add(c));
+
+            _bsQuestions.Clear();
+            var currentChallenge = _bsChallenges.Current as Challenge;
+            currentChallenge.Questions.ForEach(q => _bsQuestions.Add(q));
         }
     }
 }
