@@ -36,6 +36,7 @@ namespace WinFormsEditTests.Forms
             _bsQuestions = new BindingSource();
             _bsQuestions.DataSource = typeof(List<Question>);
             _labelQTitle.DataBindings.Add("Text", _bsQuestions, nameof(Question.Title));
+            _textBoxQuestion.DataBindings.Add("Text", _bsQuestions, nameof(Question.Value));
         }
 
         private void _buttonX_Click(object sender, EventArgs e)
