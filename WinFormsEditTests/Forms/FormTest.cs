@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinFormsEditTests.Data;
 using WinFormsEditTests.Models;
+using WinFormsEditTests.UserControls;
 
 namespace WinFormsEditTests.Forms
 {
@@ -86,6 +87,29 @@ namespace WinFormsEditTests.Forms
             _bsQuestions.Clear();
             var currentChallenge = _bsChallenges.Current as Challenge;
             currentChallenge.Questions.ForEach(q => _bsQuestions.Add(q));
+            LoadAnswers();
+        }
+
+        /// <summary>
+        /// Загрузка ответов к текущему вопросу
+        /// </summary>
+        private void LoadAnswers()
+        {
+            var currentQuestion = _bsQuestions.Current as Question;
+            var bs = new BindingSource();
+            bs.DataSource = currentQuestion.Answers;
+
+            UserControl uc = new UserControl();
+            if (currentQuestion.Type == QuestionType.SingleSelect)
+            {
+                uc = new UserControlSingle(bs);
+            }
+            else
+            {
+                uc = new UserControlMulti(bs);
+            }
+            _panel.Controls.Clear();
+            _panel.Controls.Add(uc);
         }
 
         /// <summary>
@@ -118,6 +142,7 @@ namespace WinFormsEditTests.Forms
             {
                 OpenNextChallenge();
             }
+            LoadAnswers();
         }
 
         /// <summary>
