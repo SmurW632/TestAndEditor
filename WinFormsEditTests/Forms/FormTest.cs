@@ -8,18 +8,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinFormsEditTests.Data;
+using WinFormsEditTests.Models;
 
 namespace WinFormsEditTests.Forms
 {
     public partial class FormTest : Form
     {
         private DataContext _data;
+        private BindingSource _bsChallenges = new BindingSource();
+        private BindingSource _bsQuestions = new BindingSource();
 
         public FormTest()
         {
             InitializeComponent();
 
+            SetBindings();
+
             _openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
+        }
+
+        private void SetBindings()
+        {
+            _bsChallenges = new BindingSource();
+            _bsChallenges.DataSource = typeof(List<Challenge>);
+            _labelChallenge.DataBindings.Add("Text", _bsChallenges, nameof(Challenge.Name));
         }
 
         private void _buttonX_Click(object sender, EventArgs e)
@@ -50,6 +62,10 @@ namespace WinFormsEditTests.Forms
                 return;
 
             _data = new DataContext(_openFileDialog.FileName);
+            var challenges = _data.GetAll();
+
+            _bsChallenges.Clear();
+            challenges.ForEach(c => _bsChallenges.Add(c));
         }
     }
 }
