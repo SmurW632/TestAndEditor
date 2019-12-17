@@ -118,7 +118,24 @@ namespace WinFormsEditTests.Forms
         /// </summary>
         private void OpenNextChallenge()
         {
-            throw new NotImplementedException();
+            var prevPosition = _bsChallenges.Position;
+            _bsChallenges.MoveNext();
+            if (prevPosition == _bsChallenges.Position)
+            {
+                ShowTestResults();
+            }
+        }
+
+        /// <summary>
+        /// Отображение результатов прохождения всех заданий
+        /// из текущего файла
+        /// </summary>
+        private void ShowTestResults()
+        {
+            var message = "Поздравляю вы прошли все задания!";
+            var caption = "Последнее задание пройдено";
+            MessageBox.Show(message, caption,
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
