@@ -233,14 +233,13 @@ namespace WinFormsEditTests.Forms
             if (type == QuestionType.SingleSelect)
             {
                 uc = new UserControlSingle(_bsAnswers);
-                label5.Text = "Выбирите правильный ответ";
+                
             }
-            if (type == QuestionType.MultipleSelect)
+            else
             {
                 uc = new UserControlMulti(_bsAnswers);
-                label5.Text = "Выбирите правильные ответы";
             }
-
+            label5.Text = "Выберите правильный ответ";
             _panel.Controls.Add(uc);
         }
 
