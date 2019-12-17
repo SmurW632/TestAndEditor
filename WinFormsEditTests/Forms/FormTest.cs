@@ -88,6 +88,7 @@ namespace WinFormsEditTests.Forms
             var currentChallenge = _bsChallenges.Current as Challenge;
             currentChallenge.Questions.ForEach(q => _bsQuestions.Add(q));
             LoadAnswers();
+            _labelCounter.Text = $" 1 из {_bsQuestions.Count}";
         }
 
         /// <summary>
@@ -143,6 +144,7 @@ namespace WinFormsEditTests.Forms
                 OpenNextChallenge();
             }
             LoadAnswers();
+            _labelCounter.Text = $"{_bsQuestions.Position + 1} из {_bsQuestions.Count}";
         }
 
         /// <summary>
