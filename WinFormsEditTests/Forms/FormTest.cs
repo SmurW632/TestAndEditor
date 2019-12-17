@@ -7,14 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormsEditTests.Data;
 
 namespace WinFormsEditTests.Forms
 {
     public partial class FormTest : Form
     {
+        private DataContext _data;
+
         public FormTest()
         {
             InitializeComponent();
+
+            _openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
         }
 
         private void _buttonX_Click(object sender, EventArgs e)
@@ -32,6 +37,19 @@ namespace WinFormsEditTests.Forms
         private void _buttonX_MouseLeave(object sender, EventArgs e)
         {
            _buttonX.ForeColor = Color.White;
+        }
+
+        /// <summary>
+        /// Меню-Файл-Открыть
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_openFileDialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            _data = new DataContext(_openFileDialog.FileName);
         }
     }
 }
